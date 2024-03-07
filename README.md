@@ -9,3 +9,4 @@ I'd like to request that we use the format **"[name]-[feature]"** for our branch
 For example if I was testing the speed of the grapple I'd use: **"james-grapple-speed-test"**
 
 Try to not commit to main/master if your code doesn't fully working, or if you are doing play testing tweaks as we will most likely want a couple people to test changes before implementation.
+

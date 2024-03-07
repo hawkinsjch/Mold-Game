@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 210137684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 468391883}
   - component: {fileID: 468391882}
   - component: {fileID: 468391881}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 473323902}
   - component: {fileID: 473323901}
   - component: {fileID: 473323900}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -454,6 +454,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   rb: {fileID: 473323900}
 --- !u!1 &519420028
 GameObject:
@@ -558,7 +561,7 @@ GameObject:
   - component: {fileID: 713135192}
   - component: {fileID: 713135194}
   - component: {fileID: 713135193}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +691,7 @@ GameObject:
   - component: {fileID: 1189906097}
   - component: {fileID: 1189906099}
   - component: {fileID: 1189906098}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -818,7 +821,7 @@ GameObject:
   - component: {fileID: 1366895595}
   - component: {fileID: 1366895597}
   - component: {fileID: 1366895596}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -948,7 +951,7 @@ GameObject:
   - component: {fileID: 1528530840}
   - component: {fileID: 1528530842}
   - component: {fileID: 1528530841}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1081,7 @@ GameObject:
   - component: {fileID: 1593177041}
   - component: {fileID: 1593177043}
   - component: {fileID: 1593177042}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1208,7 +1211,7 @@ GameObject:
   - component: {fileID: 1641940664}
   - component: {fileID: 1641940666}
   - component: {fileID: 1641940665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1338,7 +1341,7 @@ GameObject:
   - component: {fileID: 2044745502}
   - component: {fileID: 2044745504}
   - component: {fileID: 2044745503}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

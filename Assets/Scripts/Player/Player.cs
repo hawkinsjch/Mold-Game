@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     public float grappleVelocity = 1;
     private bool grappled = false;
+    
+    public float maxGroundDistance = 0.1f;
 
     private Vector2 lastHitPoint;
     private bool lastShotHit = false;
@@ -49,6 +51,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Physics2D.Raycast(transform.position, Vector2.down, maxGroundDistance + (transform.localScale.y / 2), layerMask))
+        {
+            float walkDir = Input.GetAxisRaw("Horizontal");
+            rb.velocity = new Vector2(walkDir * walkSpeed, rb.velocity.y);
+        }
+
         if (grappled)
         {
             rb.velocity = ((lastHitPoint - (Vector2)transform.position).normalized * grappleVelocity);

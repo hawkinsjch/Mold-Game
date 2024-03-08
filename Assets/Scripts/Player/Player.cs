@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,6 +9,9 @@ public class Player : MonoBehaviour
     public float walkSpeed;
     public LayerMask layerMask;
     public Rigidbody2D rb;
+
+    public float grappleVelocity = 1;
+    private bool grappled = false;
 
     private Vector2 lastHitPoint;
     private bool lastShotHit = false;
@@ -22,9 +26,10 @@ public class Player : MonoBehaviour
         lastShotHit = hit;
         if (hit)
         {
+            grappled = true;
             lastPlayerPos = transform.position;
             lastHitPoint = hit.point;
-            transform.position = hit.point;
+            //transform.position = hit.point;
         }
     }
 
@@ -44,11 +49,25 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float movement = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(movement * walkSpeed, rb.velocity.y);
+        if (grappled)
+        {
+            rb.velocity = ((lastHitPoint - (Vector2)transform.position).normalized * grappleVelocity);
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            rb.gravityScale = 1;
+        }
 
         if (Input.GetMouseButtonDown(0)) {
-            Grapple();
+            if (!grappled)
+            {
+                Grapple();
+            }
+            else
+            {
+                grappled = false;
+            }
         }
     }
 }

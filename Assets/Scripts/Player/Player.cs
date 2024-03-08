@@ -6,21 +6,42 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Min(0)]
-    public float walkSpeed;
-    public LayerMask layerMask;
-    public Rigidbody2D rb;
+    [SerializeField]
+    private float walkSpeed;
+    [SerializeField]
+    private LayerMask layerMask;
 
-    public float grappleInitVelocity = 1;
-    public float grappleAccelerationTime = 0.2f;
-    public float grappleMaxVelocity = 1;
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private float grappleInitVelocity = 1;
+    [SerializeField]
+    [Min(0)]
+    private float grappleAccelerationTime = 0.2f;
+    [SerializeField]
+    private float grappleMaxVelocity = 1;
+    [SerializeField]
+    [Min(0)]
+    private float grappleDelyTime = 0.05f;
+
     private bool grappled = false;
     private float grappledTime = 0;
-    
-    public float maxGroundDistance = 0.1f;
+
+    [SerializeField]
+    private float maxGroundDistance = 0.1f;
 
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        if (!rb)
+        {
+            Debug.LogError("Player has no RigidBody2D component");
+        }
+    }
 
     void Grapple()
     {
@@ -50,28 +71,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    void GrappleUpdate()
+    {
+        Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
+        float grappleVelocity = grappledTime < grappleDelyTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelyTime) / grappleAccelerationTime, 0, 1));
+
+        rb.velocity = (grappleDir * grappleVelocity);
+        rb.gravityScale = 0;
+        grappledTime += Time.deltaTime;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        
+        // Walking
         if (Physics2D.Raycast(transform.position, Vector2.down, maxGroundDistance + (transform.localScale.y / 2), layerMask))
         {
             float walkDir = Input.GetAxisRaw("Horizontal");
             rb.velocity = new Vector2(walkDir * walkSpeed, rb.velocity.y);
         }
         
-
-        if (grappled)
-        {
-            rb.velocity = ((lastHitPoint - (Vector2)transform.position).normalized * Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp(grappledTime / grappleAccelerationTime, 0, 1)));
-            rb.gravityScale = 0;
-            grappledTime += Time.deltaTime;
-        }
-        else
-        {
-            rb.gravityScale = 6;
-        }
-
+        // Grapple Shoot
         if (Input.GetMouseButtonDown(0)) {
             if (!grappled)
             {
@@ -79,13 +100,15 @@ public class Player : MonoBehaviour
             }
         }
         
+        // Grapple Management
         if (Input.GetMouseButton(0) && grappled)
         {
-
+            GrappleUpdate();
         }
         else
         {
             grappled = false;
+            rb.gravityScale = 6;
         }
     }
 }

@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public float maxGroundDistance = 0.1f;
 
     private Vector2 lastHitPoint;
-    private bool lastShotHit = false;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
@@ -25,7 +24,6 @@ public class Player : MonoBehaviour
         Debug.Log("Shot");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, (mousePos - (Vector2)transform.position).normalized, Mathf.Infinity, layerMask);
-        lastShotHit = hit;
         if (hit)
         {
             grappled = true;
@@ -37,7 +35,7 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (lastShotHit)
+        if (grappled)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(lastHitPoint, 0.15f);

@@ -1414,6 +1414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trapCollider: {fileID: 1760980882}
   trapEnabled: 1
+  bounceForce: 5
 --- !u!212 &1760980884
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -88,13 +88,17 @@ public class Player : MonoBehaviour
         grappledTime += Time.deltaTime;
     }
 
-    public void Hurt()
+    public void Hurt(Vector2 hurtPos, float bounceForce = 0)
     {
         health -= 1;
         grappled = false;
         if (health <= 0)
         {
             Respawn();
+        }
+        else
+        {
+            rb.velocity = ((Vector2)transform.position - hurtPos).normalized * bounceForce;
         }
     }
 

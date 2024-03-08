@@ -8,6 +8,9 @@ public class Trap : MonoBehaviour
     private Collider2D trapCollider;
     [SerializeField]
     private bool trapEnabled = true;
+    [SerializeField]
+    [Min(0)]
+    private float bounceForce = 10;
 
     public void EnableTrap(bool enabled)
     {
@@ -21,7 +24,7 @@ public class Trap : MonoBehaviour
             Player player = collision.gameObject.GetComponent<Player>();
             if (player)
             {
-                player.Hurt();
+                player.Hurt(transform.position, bounceForce);
             }
         }
     }

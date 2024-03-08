@@ -453,12 +453,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3d4f74524090f43a4a6d1baca49d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 3
+  walkSpeed: 5
   layerMask:
     serializedVersion: 2
     m_Bits: 256
   rb: {fileID: 473323900}
-  grappleVelocity: 25
+  grappleInitVelocity: 1
+  grappleAcceleration: 1
+  grappleMaxVelocity: 1
+  maxGroundDistance: 0.1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

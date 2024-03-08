@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float maxGroundDistance = 0.1f;
 
+    public Checkpoint currentCheckPoint;
+
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
@@ -102,10 +104,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Respawn()
+    public void Heal()
     {
         health = maxHealth;
-        transform.position = Vector2.zero;
+    }
+
+    private void Respawn()
+    {
+        Heal();
+        if (currentCheckPoint)
+        {
+            transform.position = (Vector2)currentCheckPoint.transform.position + currentCheckPoint.respawnOffset;
+        }
+        else
+        {
+            transform.position = Vector2.zero;
+        }
     }
 
 

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
 
     public float grappleInitVelocity = 1;
-    public float grappleAcceleration = 1;
+    public float grappleAccelerationTime = 0.2f;
     public float grappleMaxVelocity = 1;
     private bool grappled = false;
     private float grappledTime = 0;
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
         if (grappled)
         {
-            rb.velocity = ((lastHitPoint - (Vector2)transform.position).normalized * Mathf.Clamp(grappleInitVelocity + grappleAcceleration * grappledTime, grappleInitVelocity, grappleMaxVelocity));
+            rb.velocity = ((lastHitPoint - (Vector2)transform.position).normalized * Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp(grappledTime / grappleAccelerationTime, 0, 1)));
             rb.gravityScale = 0;
             grappledTime += Time.deltaTime;
         }

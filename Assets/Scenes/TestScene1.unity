@@ -458,9 +458,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   rb: {fileID: 473323900}
-  grappleInitVelocity: 1
-  grappleAcceleration: 1
-  grappleMaxVelocity: 1
+  grappleInitVelocity: 5
+  grappleAccelerationTime: 0.2
+  grappleMaxVelocity: 25
   maxGroundDistance: 0.1
 --- !u!1 &519420028
 GameObject:

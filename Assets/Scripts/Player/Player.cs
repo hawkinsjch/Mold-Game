@@ -28,6 +28,11 @@ public class Player : MonoBehaviour
     private float grappledTime = 0;
 
     [SerializeField]
+    private int maxHealth;
+    [SerializeField]
+    private int health;
+
+    [SerializeField]
     private float maxGroundDistance = 0.1f;
 
     private Vector2 lastHitPoint;
@@ -41,6 +46,8 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player has no RigidBody2D component");
         }
+
+        Respawn();
     }
 
     void Grapple()
@@ -79,6 +86,22 @@ public class Player : MonoBehaviour
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;
         grappledTime += Time.deltaTime;
+    }
+
+    public void Hurt()
+    {
+        health -= 1;
+        grappled = false;
+        if (health <= 0)
+        {
+            Respawn();
+        }
+    }
+
+    private void Respawn()
+    {
+        health = maxHealth;
+        transform.position = Vector2.zero;
     }
 
 

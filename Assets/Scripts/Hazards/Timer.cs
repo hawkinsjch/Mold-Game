@@ -8,14 +8,18 @@ public class Timer : MonoBehaviour
     [Min(0)]
     private float rate;
     [SerializeField]
-    [Min(0)]
     private float offset;
 
     private float currentWait = 0;
 
+    public virtual void Setup()
+    {
+        currentWait = rate - offset;
+    }
+
     private void Awake()
     {
-        currentWait = -offset;
+        Setup();
     }
 
     private void Update()

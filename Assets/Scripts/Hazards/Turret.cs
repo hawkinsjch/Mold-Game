@@ -9,8 +9,9 @@ public class Turret : Timer
     [SerializeField]
     private Vector2 shootDir;
 
-    private void Awake()
+    public override void Setup()
     {
+        base.Setup();
         shootDir = shootDir.normalized;
     }
 

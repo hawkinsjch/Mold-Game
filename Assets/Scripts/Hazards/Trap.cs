@@ -15,6 +15,7 @@ public class Trap : MonoBehaviour
     public void EnableTrap(bool enabled)
     {
         trapEnabled = enabled;
+        GetComponent<SpriteRenderer>().enabled = trapEnabled;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

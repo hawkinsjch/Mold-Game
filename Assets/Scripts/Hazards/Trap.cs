@@ -12,10 +12,16 @@ public class Trap : MonoBehaviour
     [Min(0)]
     private float bounceForce = 10;
 
-    public void EnableTrap(bool enabled)
+    public void Toggle()
     {
-        trapEnabled = enabled;
+        Toggle(!trapEnabled);
+    }
+
+    public void Toggle(bool state)
+    {
+        trapEnabled = state;
         GetComponent<SpriteRenderer>().enabled = trapEnabled;
+        trapCollider.enabled = trapEnabled;
     }
 
     public virtual void OnCollisionEnter2D(Collision2D collision)

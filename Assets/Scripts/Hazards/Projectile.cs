@@ -7,12 +7,12 @@ public class Projectile : Trap
     [SerializeField]
     private float speed;
     [SerializeField]
-    private Vector2 moveDir;
-    [SerializeField]
     [Min(0)]
     private float maxLifeSpan;
+
     [SerializeField]
     private bool followPlayer = false;
+    public Vector2 moveDir;
 
     private float lifeTime;
     private Player player;

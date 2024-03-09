@@ -17,7 +17,7 @@ public class Metronome : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime;
+        time += Time.deltaTime * (bpm / 60);
 
         foreach (Timer t in timers)
         {

@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
+    [SerializeField]
+    private LineRenderer lineRen;
+    [SerializeField]
+    private DistanceJoint2D disJoint;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,7 +52,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player has no RigidBody2D component");
         }
-
+        disJoint.enabled = false;
         Respawn();
     }
 
@@ -63,6 +67,12 @@ public class Player : MonoBehaviour
             grappled = true;
             lastPlayerPos = transform.position;
             lastHitPoint = hit.point;
+
+            lineRen.SetPosition(0, lastHitPoint);
+            lineRen.SetPosition(1, transform.position);
+            disJoint.connectedAnchor = lastHitPoint;
+            disJoint.enabled = true;
+            lineRen.enabled = true;
             //transform.position = hit.point;
         }
     }
@@ -150,6 +160,13 @@ public class Player : MonoBehaviour
         {
             grappled = false;
             rb.gravityScale = 6;
+            disJoint.enabled = false;
+            lineRen.enabled = false;
+        }
+
+        if (disJoint.enabled)
+        {
+            lineRen.SetPosition(1, transform.position);
         }
     }
 }

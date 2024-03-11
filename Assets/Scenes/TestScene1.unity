@@ -306,7 +306,6 @@ GameObject:
   - component: {fileID: 473323901}
   - component: {fileID: 473323900}
   - component: {fileID: 473323906}
-  - component: {fileID: 473323905}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -468,27 +467,6 @@ MonoBehaviour:
   maxGroundDistance: 0.1
   currentCheckPoint: {fileID: 0}
   lineRen: {fileID: 473323906}
-  disJoint: {fileID: 473323905}
---- !u!232 &473323905
-DistanceJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 473323899}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 473323900}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 1
-  m_Distance: 0.005
-  m_MaxDistanceOnly: 0
 --- !u!120 &473323906
 LineRenderer:
   serializedVersion: 2

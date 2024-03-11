@@ -14,10 +14,6 @@ public class Track : Timer
     {
         lastPoint = nextPoint;
         nextPoint = nextPoint + 1 < points.Length ? nextPoint + 1 : 0;
-
-        print(Time.time + ": " + nextPoint + ": " + nextActTime);
-
-        transform.position = points[nextPoint];
     }
 
     private void DrawRay(int p1, int p2)
@@ -41,16 +37,13 @@ public class Track : Timer
 
     private void Move()
     {
-        /*
-        currentTravelTime += Time.deltaTime;
-        float travelPerc = Mathf.Clamp((float)(currentTravelTime / travelTime), 0, 1);
+        float travelPerc = Mathf.Clamp((float)(localTime / nextActTime), 0, 1);
         Vector2 travelDirection = points[nextPoint] - points[lastPoint];
         transform.position = points[lastPoint] + travelDirection * travelPerc;
-        */
     }
 
     private void Update()
     {
-        //Move();
+        Move();
     }
 }

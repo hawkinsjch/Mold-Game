@@ -17,7 +17,7 @@ public class Turret : Timer
 
     public override void Activate()
     {
-        GameObject projObj = Instantiate(projectile, transform.position, Quaternion.identity, transform);
+        GameObject projObj = Instantiate(projectile, transform.position, Quaternion.identity);
 
         projObj.GetComponent<Projectile>().moveDir = shootDir;
     }

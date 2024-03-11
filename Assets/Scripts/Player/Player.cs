@@ -43,8 +43,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private LineRenderer lineRen;
-    [SerializeField]
-    private DistanceJoint2D disJoint;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,7 +50,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player has no RigidBody2D component");
         }
-        disJoint.enabled = false;
         Respawn();
     }
 
@@ -70,8 +67,6 @@ public class Player : MonoBehaviour
 
             lineRen.SetPosition(0, lastHitPoint);
             lineRen.SetPosition(1, transform.position);
-            disJoint.connectedAnchor = lastHitPoint;
-            disJoint.enabled = true;
             lineRen.enabled = true;
             //transform.position = hit.point;
         }
@@ -155,18 +150,13 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0) && grappled)
         {
             GrappleUpdate();
+            lineRen.SetPosition(1, transform.position);
         }
         else
         {
             grappled = false;
             rb.gravityScale = 6;
-            disJoint.enabled = false;
             lineRen.enabled = false;
-        }
-
-        if (disJoint.enabled)
-        {
-            lineRen.SetPosition(1, transform.position);
         }
     }
 }

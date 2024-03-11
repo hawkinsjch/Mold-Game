@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -82,11 +84,18 @@ public class Player : MonoBehaviour
             lineRen.SetPosition(1, transform.position);
             lineRen.enabled = true;
 
-            hookObj = Instantiate(hookPrefab);
-            hookObj.transform.position = hit.point;
-            hookObj.transform.parent = hit.collider.transform;
+            SetupHook(hit);
+
             //transform.position = hit.point;
         }
+    }
+
+    void SetupHook(RaycastHit2D hit)
+    {
+        hookObj = Instantiate(hookPrefab);
+        hookObj.transform.position = hit.point;
+        hookObj.transform.parent = hit.collider.transform;
+
     }
 
     private void OnDrawGizmos()

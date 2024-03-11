@@ -19,7 +19,6 @@ public class Rythm : ScriptableObject
     {
         int idx = currentIdx + 1 < activationRythm.Length ? currentIdx + 1 : 0;
 
-        Debug.Log(idx);
         return (activationRythm[idx], idx);
     }
 }

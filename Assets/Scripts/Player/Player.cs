@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
+    [Header("Movement Settings")]
+
     [Min(0)]
     [SerializeField]
     private float walkSpeed;
+
+    [SerializeField]
+    private float maxGroundDistance = 0.1f;
+
+
+    [Header("Grapple Settings")]
+
     [SerializeField]
     private LayerMask layerMask;
-
-    private Rigidbody2D rb;
 
     [SerializeField]
     private float grappleInitVelocity = 1;
@@ -27,22 +36,23 @@ public class Player : MonoBehaviour
     private bool grappled = false;
     private float grappledTime = 0;
 
-    [SerializeField]
-    private int maxHealth;
-    [SerializeField]
-    private int health;
-
-    [SerializeField]
-    private float maxGroundDistance = 0.1f;
-
-    public Checkpoint currentCheckPoint;
-
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
     [SerializeField]
     private LineRenderer lineRen;
+
+    [Header("Health Settings")]
+
+    [SerializeField]
+    private int maxHealth;
+    [SerializeField]
+    private int health;
+
+    [Header("Checkpoint")]
+    public Checkpoint currentCheckPoint;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

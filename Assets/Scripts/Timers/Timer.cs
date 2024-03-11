@@ -6,7 +6,9 @@ public class Timer : MonoBehaviour
 {
     public Rythm rythm;
 
+    [HideInInspector]
     public float localTime = 0;
+    [HideInInspector]
     public double nextActTime = 0;
 
     private int rythmIdx;

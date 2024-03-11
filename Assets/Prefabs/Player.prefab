@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+  maxGroundDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -56,11 +57,10 @@ MonoBehaviour:
   grappleAccelerationTime: 0.2
   grappleMaxVelocity: 25
   grappleDelyTime: 0.05
+  lineRen: {fileID: 6071323359214757278}
   maxHealth: 3
   health: 0
-  maxGroundDistance: 0.1
   currentCheckPoint: {fileID: 0}
-  lineRen: {fileID: 6071323359214757278}
 --- !u!212 &2853143374056476856
 SpriteRenderer:
   m_ObjectHideFlags: 0

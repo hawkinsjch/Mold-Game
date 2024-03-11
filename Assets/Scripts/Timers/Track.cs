@@ -7,22 +7,15 @@ public class Track : Timer
     [SerializeField]
     private Vector2[] points;
 
-    private int nextPoint = -1;
+    private int nextPoint = 0;
     private int lastPoint = 0;
 
-    [SerializeField]
-    private double travelTime = 0;
-    [SerializeField]
-    private double currentTravelTime = 0;
-
-    /*
     public override void Activate()
     {
         lastPoint = nextPoint;
         nextPoint = nextPoint + 1 < points.Length ? nextPoint + 1 : 0;
-        travelTime = rythm.GetNextTiming(localTime);
-        currentTravelTime = 0;
-        print(Time.time + ": " + nextPoint + ": " + travelTime);
+
+        print(Time.time + ": " + nextPoint + ": " + nextActTime);
 
         transform.position = points[nextPoint];
     }
@@ -48,15 +41,16 @@ public class Track : Timer
 
     private void Move()
     {
+        /*
         currentTravelTime += Time.deltaTime;
         float travelPerc = Mathf.Clamp((float)(currentTravelTime / travelTime), 0, 1);
         Vector2 travelDirection = points[nextPoint] - points[lastPoint];
         transform.position = points[lastPoint] + travelDirection * travelPerc;
+        */
     }
 
     private void Update()
     {
         //Move();
     }
-    */
 }

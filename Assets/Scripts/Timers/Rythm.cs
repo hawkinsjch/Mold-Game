@@ -5,7 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Rythm")]
 public class Rythm : ScriptableObject
 {
+    [SerializeField]
     private double initOffset;
+    [SerializeField]
     private double[] activationRythm;
 
     public double GetOffset()
@@ -17,6 +19,7 @@ public class Rythm : ScriptableObject
     {
         int idx = currentIdx + 1 < activationRythm.Length ? currentIdx + 1 : 0;
 
+        Debug.Log(idx);
         return (activationRythm[idx], idx);
     }
 }

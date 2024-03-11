@@ -21,7 +21,7 @@ public class Track : Timer
         nextPoint = nextPoint + 1 < points.Length ? nextPoint + 1 : 0;
         travelTime = rythm.GetNextTiming(localTime);
         currentTravelTime = 0;
-        print(nextPoint + ": " + travelTime);
+        print(Time.time + ": " + nextPoint + ": " + travelTime);
 
         transform.position = points[nextPoint];
     }

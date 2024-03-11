@@ -57,6 +57,7 @@ MonoBehaviour:
   grappleAccelerationTime: 0.2
   grappleMaxVelocity: 25
   grappleDelyTime: 0.05
+  hookPrefab: {fileID: 4146752813785220902, guid: d035e9a631196f64893a0852561e5d44, type: 3}
   lineRen: {fileID: 6071323359214757278}
   maxHealth: 3
   health: 0

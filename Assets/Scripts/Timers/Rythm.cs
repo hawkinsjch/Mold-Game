@@ -5,57 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Rythm")]
 public class Rythm : ScriptableObject
 {
-    public double initOffset;
-    public double[] activationRythm;
+    private double initOffset;
+    private double[] activationRythm;
 
-    private double[] activationTimes;
-    private double length;
-
-    public double GenerateTimings()
+    public double GetOffset()
     {
-        activationTimes = new double[activationRythm.Length];
-        double totalTime = 0;
-        for (int i = 0; i < activationRythm.Length; i++)
-        {
-            activationTimes[i] = totalTime;
-            totalTime += activationRythm[i];
-        }
-
-        length = totalTime;
-        return length;
+        return initOffset;
     }
 
-    public double GetNextTiming(float currentTime)
+    public (double, int) GetNextTime(int currentIdx)
     {
-        for (int i = 0; i < activationTimes.Length; i++)
-        {
-            if (currentTime < activationTimes[i])
-            {
-                return activationRythm[i];
-            }
-        }
+        int idx = currentIdx + 1 < activationRythm.Length ? currentIdx + 1 : 0;
 
-        return activationRythm[0];
-    }
-
-    public bool Activated(float previousTime, float currentTime)
-    {
-        if (previousTime <= currentTime)
-        {
-            for (int i = 0; i < activationTimes.Length; i++)
-            {
-                if (previousTime < activationTimes[i] && currentTime > activationTimes[i])
-                {
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            // Only happens on idx 0
-            return true;
-        }
-
-        return false;
+        return (activationRythm[idx], idx);
     }
 }

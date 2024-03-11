@@ -15,6 +15,7 @@ public class Track : Timer
     [SerializeField]
     private double currentTravelTime = 0;
 
+    /*
     public override void Activate()
     {
         lastPoint = nextPoint;
@@ -57,4 +58,5 @@ public class Track : Timer
     {
         //Move();
     }
+    */
 }

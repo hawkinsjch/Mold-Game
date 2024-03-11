@@ -6,13 +6,15 @@ public class Timer : MonoBehaviour
 {
     public Rythm rythm;
 
-    private double loopLength;
-    private float previousTime = 0;
     public float localTime = 0;
+    public double nextActTime = 0;
+
+    private int rythmIdx;
 
     public virtual void Setup()
     {
-        loopLength = rythm.GenerateTimings();
+        localTime = -(float)rythm.GetOffset();
+        (nextActTime, rythmIdx) = rythm.GetNextTime(-1);
     }
 
     private void Awake()
@@ -20,13 +22,14 @@ public class Timer : MonoBehaviour
         Setup();
     }
 
-    public void UpdateTime(float time)
+    public void UpdateTime(float deltaBeats)
     {
-        previousTime = localTime;
-        localTime = (int)((time - (float)rythm.initOffset) * 10000) % (int)(loopLength * 10000) / 10000f;
+        localTime += deltaBeats;
 
-        if (localTime >= 0 && rythm.Activated(previousTime, localTime))
+        if (localTime >= nextActTime)
         {
+            localTime -= (float)nextActTime;
+            (nextActTime, rythmIdx) = rythm.GetNextTime(rythmIdx);
             Activate();
         }
     }

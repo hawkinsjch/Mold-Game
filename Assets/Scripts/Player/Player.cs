@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
+    public GameObject hookPrefab;
+    private GameObject hookObj;
+
     [SerializeField]
     private LineRenderer lineRen;
 
@@ -78,6 +81,10 @@ public class Player : MonoBehaviour
             lineRen.SetPosition(0, lastHitPoint);
             lineRen.SetPosition(1, transform.position);
             lineRen.enabled = true;
+
+            hookObj = Instantiate(hookPrefab);
+            hookObj.transform.position = hit.point;
+            hookObj.transform.parent = hit.collider.transform;
             //transform.position = hit.point;
         }
     }
@@ -97,6 +104,14 @@ public class Player : MonoBehaviour
 
     void GrappleUpdate()
     {
+        // Update Hook
+        lastHitPoint = hookObj.transform.position;
+
+        // Update Line
+        lineRen.SetPosition(0, lastHitPoint);
+        lineRen.SetPosition(1, transform.position);
+
+        // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
         float grappleVelocity = grappledTime < grappleDelyTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelyTime) / grappleAccelerationTime, 0, 1));
 
@@ -160,13 +175,16 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0) && grappled)
         {
             GrappleUpdate();
-            lineRen.SetPosition(1, transform.position);
         }
         else
         {
             grappled = false;
             rb.gravityScale = 6;
             lineRen.enabled = false;
+            if (hookObj)
+            {
+                Destroy(hookObj);
+            }
         }
     }
 }

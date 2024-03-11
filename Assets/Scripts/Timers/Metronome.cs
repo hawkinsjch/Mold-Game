@@ -8,7 +8,6 @@ public class Metronome : MonoBehaviour
 
     private Timer[] timers;
 
-    private float time;
 
     private void Awake()
     {
@@ -17,11 +16,11 @@ public class Metronome : MonoBehaviour
 
     private void Update()
     {
-        time += Time.deltaTime * (bpm / 60);
+        float deltaBeats = Time.deltaTime * (bpm / 60);
 
         foreach (Timer t in timers)
         {
-            t.UpdateTime(time);
+            t.UpdateTime(deltaBeats);
         }
     }
 }

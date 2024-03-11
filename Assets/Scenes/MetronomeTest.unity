@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 9ce1633a3e2f233498eda0dace801b1b, type: 2}
+  localTime: 0
+  nextActTime: 0
   projectile: {fileID: 5121775760955771700, guid: 2127f0399ec7c70418431175164cb903, type: 3}
   shootDir: {x: 1, y: 0}
 --- !u!212 &48712814
@@ -384,6 +386,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 01fd84be891e4254ab3a38aa488e5304, type: 2}
+  localTime: 0
+  nextActTime: 0
   projectile: {fileID: 5121775760955771700, guid: 2127f0399ec7c70418431175164cb903, type: 3}
   shootDir: {x: 1, y: 0}
 --- !u!212 &252128120
@@ -484,6 +488,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 8853451bda11533478b5cdb691a2b7da, type: 2}
+  localTime: 0
+  nextActTime: 0
   projectile: {fileID: 5121775760955771700, guid: 2127f0399ec7c70418431175164cb903, type: 3}
   shootDir: {x: 1, y: 0}
 --- !u!212 &413046167
@@ -830,6 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 5
+  maxGroundDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -837,9 +844,9 @@ MonoBehaviour:
   grappleAccelerationTime: 0.2
   grappleMaxVelocity: 25
   grappleDelyTime: 0.05
+  lineRen: {fileID: 0}
   maxHealth: 3
   health: 0
-  maxGroundDistance: 0.1
   currentCheckPoint: {fileID: 0}
 --- !u!4 &873073181
 Transform:
@@ -888,6 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 50e8201e8f8d9ce40b481bfbfd0375d7, type: 2}
+  localTime: 0
+  nextActTime: 0
   projectile: {fileID: 5121775760955771700, guid: 2127f0399ec7c70418431175164cb903, type: 3}
   shootDir: {x: 1, y: 0}
 --- !u!212 &902543427
@@ -970,6 +979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 50e8201e8f8d9ce40b481bfbfd0375d7, type: 2}
+  localTime: 0
+  nextActTime: 0
 --- !u!1 &1337474283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1378,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 11400000, guid: 01fd84be891e4254ab3a38aa488e5304, type: 2}
+  localTime: 0
+  nextActTime: 0
   projectile: {fileID: 5121775760955771700, guid: 2127f0399ec7c70418431175164cb903, type: 3}
   shootDir: {x: 1, y: 0}
 --- !u!212 &1805704180

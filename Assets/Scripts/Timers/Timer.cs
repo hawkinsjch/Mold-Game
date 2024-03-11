@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField]
-    private Rythm rythm;
+    public Rythm rythm;
 
     private double loopLength;
     private float previousTime = 0;
-    private float localTime = 0;
+    public float localTime = 0;
 
     public virtual void Setup()
     {

@@ -25,6 +25,19 @@ public class Rythm : ScriptableObject
         return length;
     }
 
+    public double GetNextTiming(float currentTime)
+    {
+        for (int i = 0; i < activationTimes.Length; i++)
+        {
+            if (currentTime < activationTimes[i])
+            {
+                return activationRythm[i];
+            }
+        }
+
+        return activationRythm[0];
+    }
+
     public bool Activated(float previousTime, float currentTime)
     {
         if (previousTime <= currentTime)

@@ -3510,18 +3510,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Saw
       objectReference: {fileID: 0}
-    - target: {fileID: 4982803474572549515, guid: 69a7e61f1382cfb4599a7d2c7dccc425, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982803474572549515, guid: 69a7e61f1382cfb4599a7d2c7dccc425, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982803474572549515, guid: 69a7e61f1382cfb4599a7d2c7dccc425, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6183913909262464961, guid: 69a7e61f1382cfb4599a7d2c7dccc425, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.84

@@ -1,17 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
+    [Header("Movement Settings")]
+
     [Min(0)]
     [SerializeField]
     private float walkSpeed;
+
+    [SerializeField]
+    private float maxGroundDistance = 0.1f;
+
+
+    [Header("Grapple Settings")]
+
     [SerializeField]
     private LayerMask layerMask;
-
-    private Rigidbody2D rb;
 
     [SerializeField]
     private float grappleInitVelocity = 1;
@@ -27,22 +38,37 @@ public class Player : MonoBehaviour
     private bool grappled = false;
     private float grappledTime = 0;
 
+    private Vector2 lastHitPoint;
+    private Vector2 mousePos;
+    private Vector2 lastPlayerPos;
+
+    public GameObject hookPrefab;
+    private GameObject hookObj;
+
+    [SerializeField]
+    private LineRenderer lineRen;
+
+    [Header("Health Settings")]
+
     [SerializeField]
     private int maxHealth;
     [SerializeField]
     private int health;
 
-    [SerializeField]
-    private float maxGroundDistance = 0.1f;
-
+    [Header("Checkpoint")]
     public Checkpoint currentCheckPoint;
 
+<<<<<<< HEAD
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
+    [SerializeField]  private float gravity = -1;
+
     [SerializeField]
     private LineRenderer lineRen;
+=======
+>>>>>>> da1e6f4e51fa464f908544959c5dd1e8e9c14ea1
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +76,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player has no RigidBody2D component");
         }
+        gravity = rb.gravityScale;
         Respawn();
     }
 
@@ -68,8 +95,19 @@ public class Player : MonoBehaviour
             lineRen.SetPosition(0, lastHitPoint);
             lineRen.SetPosition(1, transform.position);
             lineRen.enabled = true;
+
+            SetupHook(hit);
+
             //transform.position = hit.point;
         }
+    }
+
+    void SetupHook(RaycastHit2D hit)
+    {
+        hookObj = Instantiate(hookPrefab);
+        hookObj.transform.position = hit.point;
+        hookObj.transform.parent = hit.collider.transform;
+
     }
 
     private void OnDrawGizmos()
@@ -87,6 +125,14 @@ public class Player : MonoBehaviour
 
     void GrappleUpdate()
     {
+        // Update Hook
+        lastHitPoint = hookObj.transform.position;
+
+        // Update Line
+        lineRen.SetPosition(0, lastHitPoint);
+        lineRen.SetPosition(1, transform.position);
+
+        // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
         float grappleVelocity = grappledTime < grappleDelyTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelyTime) / grappleAccelerationTime, 0, 1));
 
@@ -132,6 +178,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Walking
+        
         if (Physics2D.Raycast(transform.position, Vector2.down, maxGroundDistance + (transform.localScale.y / 2), layerMask))
         {
             float walkDir = Input.GetAxisRaw("Horizontal");
@@ -150,13 +197,17 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0) && grappled)
         {
             GrappleUpdate();
-            lineRen.SetPosition(1, transform.position);
         }
         else
         {
             grappled = false;
-            rb.gravityScale = 6;
+            if(gravity != -1)
+            rb.gravityScale = gravity;
             lineRen.enabled = false;
+            if (hookObj)
+            {
+                Destroy(hookObj);
+            }
         }
     }
 }

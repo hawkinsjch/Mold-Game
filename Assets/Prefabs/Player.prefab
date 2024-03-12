@@ -52,7 +52,7 @@ MonoBehaviour:
   maxGroundDistance: 0.1
   layerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   grappleInitVelocity: 5
   grappleAccelerationTime: 0.2
   grappleMaxVelocity: 25

@@ -59,7 +59,7 @@ MonoBehaviour:
   grappleDelyTime: 0.05
   hookPrefab: {fileID: 4146752813785220902, guid: d035e9a631196f64893a0852561e5d44, type: 3}
   lineRen: {fileID: 6071323359214757278}
-  maxHealth: 3
+  maxHealth: 1
   health: 0
   currentCheckPoint: {fileID: 0}
 --- !u!212 &2853143374056476856

@@ -397,6 +397,10 @@ PrefabInstance:
       propertyPath: upperBound
       value: 
       objectReference: {fileID: 1649229416}
+    - target: {fileID: 7562614305511889835, guid: 2ef6d282562185744879bb726b28c734, type: 3}
+      propertyPath: transitionTime
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

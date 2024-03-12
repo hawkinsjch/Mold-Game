@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     private LayerMask layerMask;
 
     [SerializeField]
+    [Min(1)]
+    private float maxGrappleDistance = 6;
+    [SerializeField]
     private float grappleInitVelocity = 1;
     [SerializeField]
     [Min(0)]
@@ -75,7 +78,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Shot");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (mousePos - (Vector2)transform.position).normalized, Mathf.Infinity, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, (mousePos - (Vector2)transform.position).normalized, maxGrappleDistance, layerMask);
         if (hit)
         {
             grappledTime = 0;

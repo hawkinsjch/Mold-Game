@@ -9,6 +9,10 @@ public class TrapToggler : Timer
 
     public override void Activate()
     {
-        trap.Toggle();
+        bool enabled = trap.Toggle();
+        foreach (TogglePart tP in GetComponentsInChildren<TogglePart>())
+        {
+            tP.SetState(enabled);   
+        }
     }
 }

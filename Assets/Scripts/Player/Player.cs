@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
     private bool grappled = false;
     private float grappledTime = 0;
 
+    private float gravityScale;
+
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Player has no RigidBody2D component");
         }
         Respawn();
+        gravityScale = rb.gravityScale;
     }
 
     void Grapple()
@@ -188,7 +191,7 @@ public class Player : MonoBehaviour
         else
         {
             grappled = false;
-            rb.gravityScale = 6;
+            rb.gravityScale = gravityScale;
             lineRen.enabled = false;
             if (hookObj)
             {

@@ -20,7 +20,7 @@ public class Trap : MonoBehaviour
     public void Toggle(bool state)
     {
         trapEnabled = state;
-        GetComponent<SpriteRenderer>().enabled = trapEnabled;
+        //GetComponent<SpriteRenderer>().enabled = trapEnabled;
         trapCollider.enabled = trapEnabled;
     }
 

@@ -310,17 +310,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c065aa95d6e0ee34b906bcd934724a7c, type: 3}
---- !u!114 &321870338 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 139764955290093382, guid: a6eff5085a97dd748bafacac2d92d841, type: 3}
-  m_PrefabInstance: {fileID: 98077440}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c25604f1d40944ea8b55a2be048817, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &345516199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -567,7 +556,7 @@ PrefabInstance:
     - target: {fileID: 2706036403536031181, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: currentCheckPoint
       value: 
-      objectReference: {fileID: 321870338}
+      objectReference: {fileID: 1627666289}
     - target: {fileID: 4890185124499787809, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -660,7 +649,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4103029229987352217, guid: 2ef6d282562185744879bb726b28c734, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2059154773}
   m_SourcePrefab: {fileID: 100100000, guid: 2ef6d282562185744879bb726b28c734, type: 3}
 --- !u!1001 &1342719800
 PrefabInstance:
@@ -674,6 +666,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret R2-4
       objectReference: {fileID: 0}
+    - target: {fileID: 3964787600289732908, guid: c065aa95d6e0ee34b906bcd934724a7c, type: 3}
+      propertyPath: rythm
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ce1633a3e2f233498eda0dace801b1b, type: 2}
     - target: {fileID: 5166057080851950905, guid: c065aa95d6e0ee34b906bcd934724a7c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 29.5
@@ -719,6 +715,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c065aa95d6e0ee34b906bcd934724a7c, type: 3}
+--- !u!114 &1627666289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 139764955290093382, guid: a6eff5085a97dd748bafacac2d92d841, type: 3}
+  m_PrefabInstance: {fileID: 345516199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c25604f1d40944ea8b55a2be048817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649229415
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +802,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2059154768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4103029229987352217, guid: 2ef6d282562185744879bb726b28c734, type: 3}
+  m_PrefabInstance: {fileID: 1214806022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2059154773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059154768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c89f750cfe3e004f8cc09ee3ef2bbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bpm: 60
 --- !u!1 &2091759536
 GameObject:
   m_ObjectHideFlags: 0

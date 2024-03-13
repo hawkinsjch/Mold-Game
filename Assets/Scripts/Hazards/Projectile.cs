@@ -23,7 +23,10 @@ public class Projectile : Trap
     {
         base.OnCollisionEnter2D(collision);
 
-        Destroy(gameObject);
+        if (!collision.transform.GetComponent<Player>())
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void TrackPlayer()

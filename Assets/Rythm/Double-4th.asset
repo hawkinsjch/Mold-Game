@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb22bf17b9f4c704c96968af01227483, type: 3}
-  m_Name: Single3rd
+  m_Name: Double-4th
   m_EditorClassIdentifier: 
-  initOffset: 0.5
+  initOffset: 1.5
   activationRythm:
-  - 1
-  activationTimes:
-  - 0
+  - 2

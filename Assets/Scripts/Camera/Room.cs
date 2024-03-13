@@ -6,6 +6,8 @@ public class Room : MonoBehaviour
 {
     [SerializeField]
     private Vector2Int roomSize;
+    [SerializeField]
+    private bool renderRoomGizmo;
 
     private BoxCollider2D col;
     private CameraController cam;
@@ -27,16 +29,43 @@ public class Room : MonoBehaviour
         return (minBound, maxBound);
     }
 
-    private void Awake()
+    private void OnDrawGizmos()
+    {
+        if (renderRoomGizmo)
+        {
+            Vector2 min, max;
+            min = (Vector2)transform.position - (roomSize / 2);
+            max = (Vector2)transform.position + (roomSize / 2);
+
+            Vector2 bL = min;
+            Vector2 tL = new Vector2(min.x, max.y);
+            Vector2 bR = new Vector2(max.x, min.y);
+            Vector2 tR = max;
+
+            Gizmos.color = Color.green;
+
+            Gizmos.DrawRay(bL, tL - bL);
+            Gizmos.DrawRay(tL, tR - tL);
+            Gizmos.DrawRay(tR, bR - tR);
+            Gizmos.DrawRay(bR, bL - bR);
+        }
+    }
+
+    private void GetCameraInfo()
     {
         cam = Camera.main.GetComponent<CameraController>();
 
         float camScalarSize = Camera.main.orthographicSize;
         cameraSize = new Vector2(camScalarSize / 9 * 16 * 2, camScalarSize * 2);
+    }
+
+    private void Awake()
+    {
+        GetCameraInfo();
 
         col = gameObject.AddComponent<BoxCollider2D>();
         col.isTrigger = true;
-        col.size = roomSize;
+        col.size = roomSize - new Vector2(0.05f, 0.05f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

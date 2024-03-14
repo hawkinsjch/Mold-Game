@@ -44,12 +44,6 @@ public class Player : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
 
-    public GameObject hookPrefab;
-    private GameObject hookObj;
-
-    [SerializeField]
-    private LineRenderer lineRen;
-
     [Header("Health Settings")]
 
     [SerializeField]
@@ -57,10 +51,19 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int health;
 
-    [Header("Sprite Prefabs")]
+    [Header("Grapple Objects")]
+
+    public GameObject hookPrefab;
+    private GameObject hookObj;
+
+    [SerializeField]
+    private LineRenderer lineRen;
+
     [SerializeField] private GameObject _ropeSprite;
     private GameObject _ropeObject;
     private SpriteRenderer ropeRenderer;
+
+
 
     [Header("Checkpoint")]
     public Checkpoint currentCheckPoint;
@@ -97,7 +100,6 @@ public class Player : MonoBehaviour
 
     void Grapple()
     {
-        Debug.Log("Shot");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 rot = (mousePos - (Vector2)transform.position).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rot, Mathf.Infinity, layerMask);
@@ -105,7 +107,6 @@ public class Player : MonoBehaviour
        
 
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
-        _ropeObject.transform.localScale = new Vector3(1, 0.5f, 1);
         ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
         UpdateRope(hit.point);
 
@@ -154,16 +155,11 @@ public class Player : MonoBehaviour
     {
 
         // Update Hook
-        Debug.Log(lastHitPoint);
-        //lastHitPoint = hookObj.transform.position;
         UpdateRope(lastHitPoint);
 
         // Update Line
         lineRen.SetPosition(0, lastHitPoint);
         lineRen.SetPosition(1, transform.position);
-
-        
-        
 
         // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;

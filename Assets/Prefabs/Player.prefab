@@ -61,6 +61,7 @@ MonoBehaviour:
   lineRen: {fileID: 6071323359214757278}
   maxHealth: 1
   health: 0
+  _ropeSprite: {fileID: 7786803577576050224, guid: 5e800efb4b1966e4685b60b47114ab46, type: 3}
   currentCheckPoint: {fileID: 0}
 --- !u!212 &2853143374056476856
 SpriteRenderer:

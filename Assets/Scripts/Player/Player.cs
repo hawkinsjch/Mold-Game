@@ -75,6 +75,21 @@ public class Player : MonoBehaviour
         gravityScale = rb.gravityScale;
     }
 
+    void UpdateRope(Vector2 pos)
+    {
+        if (_ropeObject)
+        {
+            Vector3 look = transform.InverseTransformPoint(new Vector3(pos.x, pos.y, 0));
+            float CurAngle = _ropeObject.transform.eulerAngles.z;
+            if (CurAngle > 180)
+            {
+                CurAngle = CurAngle - 360;
+            }
+            float Angle = Mathf.Atan2(-look.x, look.y) * Mathf.Rad2Deg - 90 - CurAngle;
+            _ropeObject.transform.Rotate(0, 0, Angle);
+        }
+    }
+
     void Grapple()
     {
         Debug.Log("Shot");
@@ -85,11 +100,7 @@ public class Player : MonoBehaviour
        
 
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
-        Vector3 look = transform.InverseTransformPoint(new Vector3(hit.point.x, hit.point.y, 0));
-        float Angle = Mathf.Atan2(-look.x, look.y) * Mathf.Rad2Deg - 90;
-        _ropeObject.transform.Rotate(0, 0, Angle);
-        
-
+        UpdateRope(hit.point);
 
 
         if (hit)
@@ -134,8 +145,11 @@ public class Player : MonoBehaviour
 
     void GrappleUpdate()
     {
+
         // Update Hook
-        lastHitPoint = hookObj.transform.position;
+        Debug.Log(lastHitPoint);
+        //lastHitPoint = hookObj.transform.position;
+        UpdateRope(lastHitPoint);
 
         // Update Line
         lineRen.SetPosition(0, lastHitPoint);

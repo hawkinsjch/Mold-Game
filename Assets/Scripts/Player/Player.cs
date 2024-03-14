@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     [Header("Sprite Prefabs")]
     [SerializeField] private GameObject _ropeSprite;
     private GameObject _ropeObject;
+    private SpriteRenderer ropeRenderer;
 
     [Header("Checkpoint")]
     public Checkpoint currentCheckPoint;
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour
     {
         if (_ropeObject)
         {
+            // Rotation Update
             Vector3 look = transform.InverseTransformPoint(new Vector3(pos.x, pos.y, 0));
             float CurAngle = _ropeObject.transform.eulerAngles.z;
             if (CurAngle > 180)
@@ -87,6 +89,9 @@ public class Player : MonoBehaviour
             }
             float Angle = Mathf.Atan2(-look.x, look.y) * Mathf.Rad2Deg - 90 - CurAngle;
             _ropeObject.transform.Rotate(0, 0, Angle);
+
+            // Size Update
+            ropeRenderer.size = new Vector2(Vector2.Distance(lastHitPoint, (Vector2)transform.position), 1);
         }
     }
 
@@ -100,6 +105,8 @@ public class Player : MonoBehaviour
        
 
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
+        _ropeObject.transform.localScale = new Vector3(1, 0.5f, 1);
+        ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
         UpdateRope(hit.point);
 
 
@@ -155,7 +162,7 @@ public class Player : MonoBehaviour
         lineRen.SetPosition(0, lastHitPoint);
         lineRen.SetPosition(1, transform.position);
 
-        _ropeObject.transform.localScale = new Vector3(Vector2.Distance(lastHitPoint, (Vector2)transform.position),0.5f,1);
+        
         
 
         // Grapple Velocity

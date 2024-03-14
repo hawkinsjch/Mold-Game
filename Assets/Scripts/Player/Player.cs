@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private float grappleMaxVelocity = 1;
     [SerializeField]
     [Min(0)]
-    private float grappleDelyTime = 0.05f;
+    private float grappleDelayTime = 0.05f;
 
     private bool grappled = false;
     private float grappledTime = 0;
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
 
         // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
-        float grappleVelocity = grappledTime < grappleDelyTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelyTime) / grappleAccelerationTime, 0, 1));
+        float grappleVelocity = grappledTime < grappleDelayTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelayTime) / grappleAccelerationTime, 0, 1));
 
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;

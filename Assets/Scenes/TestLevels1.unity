@@ -7342,6 +7342,22 @@ PrefabInstance:
       propertyPath: currentCheckPoint
       value: 
       objectReference: {fileID: 591879674}
+    - target: {fileID: 2853143374056476856, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 98387bc9ddf33b94a9bbd9f0a774aae4, type: 3}
+    - target: {fileID: 2853143374056476856, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853143374056476856, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853143374056476856, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4890185124499787809, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7349,6 +7365,18 @@ PrefabInstance:
     - target: {fileID: 6766352768385618538, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: m_GravityScale
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938827690650924581, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Radius
+      value: 0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938827690650924581, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938827690650924581, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.02
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

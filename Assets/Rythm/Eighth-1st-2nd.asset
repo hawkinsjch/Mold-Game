@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb22bf17b9f4c704c96968af01227483, type: 3}
-  m_Name: Triplets
+  m_Name: Eighth-1st-2nd
   m_EditorClassIdentifier: 
-  initOffset: -1
+  initOffset: 0
   activationRythm:
-  - 1.33
-  - 0.33
-  - 0.34
+  - 0.125
+  - 0.875

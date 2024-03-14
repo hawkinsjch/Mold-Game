@@ -57,6 +57,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int health;
 
+    [Header("Sprite Prefabs")]
+    [SerializeField] private GameObject _ropeSprite;
+    private GameObject _ropeObject;
+
     [Header("Checkpoint")]
     public Checkpoint currentCheckPoint;
 
@@ -75,7 +79,19 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Shot");
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, (mousePos - (Vector2)transform.position).normalized, Mathf.Infinity, layerMask);
+        Vector2 rot = (mousePos - (Vector2)transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rot, Mathf.Infinity, layerMask);
+
+       
+
+        _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
+        Vector3 look = transform.InverseTransformPoint(new Vector3(hit.point.x, hit.point.y, 0));
+        float Angle = Mathf.Atan2(-look.x, look.y) * Mathf.Rad2Deg - 90;
+        _ropeObject.transform.Rotate(0, 0, Angle);
+        
+
+
+
         if (hit)
         {
             grappledTime = 0;
@@ -83,9 +99,9 @@ public class Player : MonoBehaviour
             lastPlayerPos = transform.position;
             lastHitPoint = hit.point;
 
-            lineRen.SetPosition(0, lastHitPoint);
-            lineRen.SetPosition(1, transform.position);
-            lineRen.enabled = true;
+         //   lineRen.SetPosition(0, lastHitPoint);
+           // lineRen.SetPosition(1, transform.position);
+           // lineRen.enabled = true;
 
             SetupHook(hit);
 
@@ -105,12 +121,14 @@ public class Player : MonoBehaviour
     {
         if (grappled)
         {
+            
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(lastHitPoint, 0.15f);
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(mousePos, 0.15f);
             Gizmos.DrawSphere(lastPlayerPos, 0.15f);
             Gizmos.DrawRay(lastPlayerPos, lastHitPoint - lastPlayerPos);
+            
         }
     }
 
@@ -122,6 +140,9 @@ public class Player : MonoBehaviour
         // Update Line
         lineRen.SetPosition(0, lastHitPoint);
         lineRen.SetPosition(1, transform.position);
+
+        _ropeObject.transform.localScale = new Vector3(Vector2.Distance(lastHitPoint, (Vector2)transform.position),0.5f,1);
+        
 
         // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
@@ -196,6 +217,10 @@ public class Player : MonoBehaviour
             if (hookObj)
             {
                 Destroy(hookObj);
+            }
+            if (_ropeObject)
+            {
+                Destroy(_ropeObject);
             }
         }
     }

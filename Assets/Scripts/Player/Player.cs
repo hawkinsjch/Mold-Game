@@ -154,6 +154,8 @@ public class Player : MonoBehaviour
     private void Respawn()
     {
         Heal();
+        grappled = false;
+        rb.velocity = Vector2.zero;
         if (currentCheckPoint)
         {
             transform.position = (Vector2)currentCheckPoint.transform.position + currentCheckPoint.respawnOffset;

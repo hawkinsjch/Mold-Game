@@ -9,28 +9,11 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    [Header("Movement Settings")]
-
-    [Min(0)]
-    [SerializeField]
-    private float walkSpeed;
-
-    [SerializeField]
-    private float maxGroundDistance = 0.1f;
-
-
-    [Header("Grapple Settings")]
+    [Header("Grapple Shot Settings")]
 
     [SerializeField]
     private LayerMask layerMask;
 
-    [SerializeField]
-    private float grappleInitVelocity = 1;
-    [SerializeField]
-    [Min(0)]
-    private float grappleAccelerationTime = 0.2f;
-    [SerializeField]
-    private float grappleMaxVelocity = 1;
     [SerializeField]
     [Min(1)]
     private float grappleMaxDistance = 16;
@@ -47,13 +30,23 @@ public class Player : MonoBehaviour
 
     private float grappleHitDistance = 0f;
     private float grappleMoveTime;
-    private float grappleRetractTime;
 
     private float gravityScale;
 
     private Vector2 lastHitPoint;
     private Vector2 mousePos;
     private Vector2 lastPlayerPos;
+
+
+    [Header("Grapple Pull Settings")]
+
+    [SerializeField]
+    private float grappleInitVelocity = 1;
+    [SerializeField]
+    [Min(0)]
+    private float grappleAccelerationTime = 0.2f;
+    [SerializeField]
+    private float grappleMaxVelocity = 1;
 
     [Header("Health Settings")]
 
@@ -125,13 +118,10 @@ public class Player : MonoBehaviour
         Vector2 rot = (mousePos - (Vector2)transform.position).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rot, grappleMaxDistance, layerMask);
 
-       
-
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
         ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
 
         SetupHook(hit);
-
 
         currentState = GrappleState.Extending;
         if (hit)
@@ -226,13 +216,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Walking
-        if (Physics2D.Raycast(transform.position, Vector2.down, maxGroundDistance + (transform.localScale.y / 2), layerMask))
-        {
-            float walkDir = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector2(walkDir * walkSpeed, rb.velocity.y);
-        }
-        
         // Grapple Shoot
         if (Input.GetMouseButtonDown(0)) {
             if (currentState == GrappleState.None)
@@ -295,7 +278,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonUp(0) && currentState == GrappleState.Grappled)
+        if (!Input.GetMouseButton(0) && currentState == GrappleState.Grappled)
         {
             StartRetract();
         }

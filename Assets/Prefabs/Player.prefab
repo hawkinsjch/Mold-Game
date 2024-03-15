@@ -47,18 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3d4f74524090f43a4a6d1baca49d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  maxGroundDistance: 0.1
   layerMask:
     serializedVersion: 2
     m_Bits: 2304
+  grappleMaxDistance: 12
+  grappleShootSpeed: 100
+  grappleRetractSpeed: 100
   grappleInitVelocity: 5
   grappleAccelerationTime: 0.2
   grappleMaxVelocity: 25
-  grappleMaxDistance: 12
-  grappleDelayTime: 0.15
-  grappleShootSpeed: 60
-  grappleRetractSpeed: 80
   maxHealth: 1
   health: 0
   hookPrefab: {fileID: 4146752813785220902, guid: d035e9a631196f64893a0852561e5d44, type: 3}

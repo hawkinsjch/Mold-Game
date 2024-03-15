@@ -15,5 +15,3 @@ MonoBehaviour:
   initOffset: 0.5
   activationRythm:
   - 1
-  activationTimes:
-  - 0

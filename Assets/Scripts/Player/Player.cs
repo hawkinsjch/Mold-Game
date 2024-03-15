@@ -65,11 +65,12 @@ public class Player : MonoBehaviour
     private SpriteRenderer ropeRenderer;
 
     [Header("Sprites List")]
-    private SpriteRenderer spriteRenderer;
+
     [SerializeField] private Sprite deadSprite;
     [SerializeField] private Sprite happySprite;
     [SerializeField] private Sprite forceSprite;
     [SerializeField] private Sprite smileSprite;
+    private SpriteRenderer spriteRenderer;
 
     private GrappleState currentState = GrappleState.None;
     private enum GrappleState

@@ -240,7 +240,7 @@ public class Player : MonoBehaviour
         }
         
         // Grapple Management
-        if (Input.GetMouseButton(0) && (grappled || grappleExtending))
+        if ((Input.GetMouseButton(0) && grappled) || grappleExtending)
         {
             grappledTime += Time.deltaTime;
             if (grappled && !grappleExtending)

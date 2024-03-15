@@ -58,7 +58,7 @@ MonoBehaviour:
   grappleMaxDistance: 12
   grappleDelayTime: 0.15
   grappleShootSpeed: 60
-  grappleRetractSpeed: 0
+  grappleRetractSpeed: 80
   maxHealth: 1
   health: 0
   hookPrefab: {fileID: 4146752813785220902, guid: d035e9a631196f64893a0852561e5d44, type: 3}

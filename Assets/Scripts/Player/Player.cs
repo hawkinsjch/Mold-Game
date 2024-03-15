@@ -34,9 +34,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     [Min(1)]
     private float grappleMaxDistance = 16;
-    [SerializeField]
-    [Min(0)]
-    private float grappleDelayTime = 0.05f;
 
     [SerializeField]
     [Min(0)]
@@ -50,6 +47,7 @@ public class Player : MonoBehaviour
 
     private float grappleHitDistance = 0f;
     private float grappleMoveTime;
+    private float grappleRetractTime;
 
     private float gravityScale;
 
@@ -102,7 +100,6 @@ public class Player : MonoBehaviour
     {
         if (_ropeObject)
         {
-            Debug.Log(pos);
             // Rotation Update
             Vector3 look = transform.InverseTransformPoint(new Vector3(pos.x, pos.y, 0));
             float CurAngle = _ropeObject.transform.eulerAngles.z;
@@ -184,7 +181,7 @@ public class Player : MonoBehaviour
 
         // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
-        float grappleVelocity = grappleTime < grappleDelayTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappleTime - grappleDelayTime) / grappleAccelerationTime, 0, 1));
+        float grappleVelocity = Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappleTime - grappleMoveTime) / grappleAccelerationTime, 0, 1));
 
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;
@@ -257,7 +254,7 @@ public class Player : MonoBehaviour
                     }
                     else
                     {
-                        currentState = GrappleState.None;
+                        StartRetract();
                     }
                 }
                 else
@@ -271,7 +268,16 @@ public class Player : MonoBehaviour
                 GrappleUpdate();
                 break;
             case GrappleState.Retracting:
-
+                float moveAmount = Time.deltaTime * grappleRetractSpeed;
+                float distance = Vector2.Distance(hookObj.transform.position, transform.position);
+                if (moveAmount >= distance)
+                {
+                    currentState = GrappleState.None;
+                }
+                else
+                {
+                    UpdateRope(hookObj.transform.position + ((transform.position - hookObj.transform.position).normalized * moveAmount));
+                }
 
                 break;
             case GrappleState.None:
@@ -290,6 +296,18 @@ public class Player : MonoBehaviour
 
 
         if (Input.GetMouseButtonUp(0) && currentState == GrappleState.Grappled)
+        {
+            StartRetract();
+        }
+    }
+
+    private void StartRetract()
+    {
+        if (hookObj)
+        {
+            currentState = GrappleState.Retracting;
+        }
+        else
         {
             currentState = GrappleState.None;
         }

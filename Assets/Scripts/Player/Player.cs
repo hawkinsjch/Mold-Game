@@ -45,10 +45,8 @@ public class Player : MonoBehaviour
     [Min(0)]
     private float grappleRetractSpeed;
 
-
-    private bool grappled = false;
-    private bool grappleExtending = false;
-    private float grappledTime = 0;
+    private float grappleTime = 0;
+    private bool grappleHitWall = false;
 
     private float grappleHitDistance = 0f;
     private float grappleMoveTime;
@@ -71,12 +69,18 @@ public class Player : MonoBehaviour
     public GameObject hookPrefab;
     private GameObject hookObj;
 
-    [SerializeField]
-    private LineRenderer lineRen;
-
     [SerializeField] private GameObject _ropeSprite;
     private GameObject _ropeObject;
     private SpriteRenderer ropeRenderer;
+
+    private GrappleState currentState = GrappleState.None;
+    private enum GrappleState
+    {
+        None,
+        Extending,
+        Grappled,
+        Retracting
+    };
 
 
 
@@ -126,23 +130,21 @@ public class Player : MonoBehaviour
         ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
 
 
+        currentState = GrappleState.Extending;
         if (hit)
         {
-            UpdateRope(hit.point);
-
-            grappledTime = 0;
-            grappled = true;
             lastHitPoint = hit.point;
             SetupHook(hit);
+            grappleHitWall = true;
         }
         else
         {
+            grappleHitWall = false;
             lastHitPoint = (Vector2)transform.position + rot * grappleMaxDistance;
         }
         grappleHitDistance = Vector2.Distance(transform.position, lastHitPoint);
         grappleMoveTime = grappleHitDistance / grappleShootSpeed;
         lastPlayerPos = transform.position;
-        grappleExtending = true;
     }
 
     void SetupHook(RaycastHit2D hit)
@@ -155,7 +157,7 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (grappled || grappleExtending)
+        if (currentState != GrappleState.None)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(lastHitPoint, 0.15f);
@@ -172,13 +174,9 @@ public class Player : MonoBehaviour
         // Update Hook
         UpdateRope(lastHitPoint);
 
-        // Update Line
-        lineRen.SetPosition(0, lastHitPoint);
-        lineRen.SetPosition(1, transform.position);
-
         // Grapple Velocity
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
-        float grappleVelocity = grappledTime < grappleDelayTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappledTime - grappleDelayTime) / grappleAccelerationTime, 0, 1));
+        float grappleVelocity = grappleTime < grappleDelayTime ? 0 : Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappleTime - grappleDelayTime) / grappleAccelerationTime, 0, 1));
 
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;
@@ -187,7 +185,7 @@ public class Player : MonoBehaviour
     public void Hurt(Vector2 hurtPos, float bounceForce = 0)
     {
         health -= 1;
-        grappled = false;
+        currentState = GrappleState.None;
         if (health <= 0)
         {
             Respawn();
@@ -206,9 +204,8 @@ public class Player : MonoBehaviour
     private void Respawn()
     {
         Heal();
-        grappled = false;
-        grappleExtending = false;
-        grappledTime = 0;
+        currentState = GrappleState.None;
+        grappleTime = 0;
         rb.velocity = Vector2.zero;
         if (currentCheckPoint)
         {
@@ -233,48 +230,60 @@ public class Player : MonoBehaviour
         
         // Grapple Shoot
         if (Input.GetMouseButtonDown(0)) {
-            if (!grappled && !grappleExtending)
+            if (currentState == GrappleState.None)
             {
                 Grapple();
             }
         }
         
         // Grapple Management
-        if ((Input.GetMouseButton(0) && grappled) || grappleExtending)
+        switch (currentState)
         {
-            grappledTime += Time.deltaTime;
-            if (grappled && !grappleExtending)
-            {
-                GrappleUpdate();
-            }
-            else if (grappleExtending)
-            {
-                if (grappledTime >= grappleMoveTime)
+            case GrappleState.Extending:
+                grappleTime += Time.deltaTime;
+                if (grappleTime >= grappleMoveTime)
                 {
-                    grappleExtending = false;
+                    if (grappleHitWall)
+                    {
+                        currentState = GrappleState.Grappled;
+                    }
+                    else
+                    {
+                        currentState = GrappleState.None;
+                    }
                 }
                 else
                 {
-                    float movePerc = grappledTime / grappleMoveTime;
+                    float movePerc = grappleTime / grappleMoveTime;
                     UpdateRope(Vector2.Lerp(transform.position, lastHitPoint, movePerc));
                 }
-            }
+                break;
+            case GrappleState.Grappled:
+                grappleTime += Time.deltaTime;
+                GrappleUpdate();
+                break;
+            case GrappleState.Retracting:
+
+
+                break;
+            case GrappleState.None:
+                rb.gravityScale = gravityScale;
+                grappleTime = 0;
+                if (hookObj)
+                {
+                    Destroy(hookObj);
+                }
+                if (_ropeObject)
+                {
+                    Destroy(_ropeObject);
+                }
+                break;
         }
-        else
+
+
+        if (Input.GetMouseButtonUp(0) && currentState == GrappleState.Grappled)
         {
-            grappled = false;
-            grappleExtending = false;
-            rb.gravityScale = gravityScale;
-            lineRen.enabled = false;
-            grappledTime = 0;
-            if (hookObj)
-            {
-                Destroy(hookObj);
-            }
-            if (_ropeObject)
-            {
-                Destroy(_ropeObject);
-            }
+            currentState = GrappleState.None;
         }
     }
 }

@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
         gravityScale = rb.gravityScale;
     }
 
-    void UpdateRope(Vector2 pos)
+    private void UpdateRope(Vector2 pos)
     {
         if (_ropeObject)
         {
@@ -112,7 +112,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Grapple()
+    private void DestroyRope()
+    {
+
+        if (hookObj)
+        {
+            Destroy(hookObj);
+        }
+        if (_ropeObject)
+        {
+            Destroy(_ropeObject);
+        }
+    }
+
+    private void Grapple()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 rot = (mousePos - (Vector2)transform.position).normalized;
@@ -139,7 +152,7 @@ public class Player : MonoBehaviour
         lastPlayerPos = transform.position;
     }
 
-    void SetupHook(RaycastHit2D hit)
+    private void SetupHook(RaycastHit2D hit)
     {
         hookObj = Instantiate(hookPrefab);
         if (hit)
@@ -163,7 +176,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void GrappleUpdate()
+    private void GrappleUpdate()
     {
 
         // Update Hook
@@ -216,13 +229,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Grapple Shoot
-        if (Input.GetMouseButtonDown(0)) {
-            if (currentState == GrappleState.None)
-            {
-                Grapple();
-            }
-        }
         
         // Grapple Management
         switch (currentState)
@@ -256,6 +262,7 @@ public class Player : MonoBehaviour
                 if (moveAmount >= distance)
                 {
                     currentState = GrappleState.None;
+                    DestroyRope();
                 }
                 else
                 {
@@ -266,17 +273,18 @@ public class Player : MonoBehaviour
             case GrappleState.None:
                 rb.gravityScale = gravityScale;
                 grappleTime = 0;
-                if (hookObj)
-                {
-                    Destroy(hookObj);
-                }
-                if (_ropeObject)
-                {
-                    Destroy(_ropeObject);
-                }
+                DestroyRope();
                 break;
         }
 
+        // Grapple Shoot
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (currentState == GrappleState.None)
+            {
+                Grapple();
+            }
+        }
 
         if (!Input.GetMouseButton(0) && currentState == GrappleState.Grappled)
         {

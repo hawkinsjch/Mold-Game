@@ -32,11 +32,26 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float grappleMaxVelocity = 1;
     [SerializeField]
+    [Min(1)]
+    private float grappleMaxDistance = 16;
+    [SerializeField]
     [Min(0)]
     private float grappleDelayTime = 0.05f;
 
+    [SerializeField]
+    [Min(0)]
+    private float grappleShootSpeed;
+    [SerializeField]
+    [Min(0)]
+    private float grappleRetractSpeed;
+
+
     private bool grappled = false;
+    private bool grappleExtending = false;
     private float grappledTime = 0;
+
+    private float grappleHitDistance = 0f;
+    private float grappleMoveTime;
 
     private float gravityScale;
 
@@ -83,6 +98,7 @@ public class Player : MonoBehaviour
     {
         if (_ropeObject)
         {
+            Debug.Log(pos);
             // Rotation Update
             Vector3 look = transform.InverseTransformPoint(new Vector3(pos.x, pos.y, 0));
             float CurAngle = _ropeObject.transform.eulerAngles.z;
@@ -94,7 +110,7 @@ public class Player : MonoBehaviour
             _ropeObject.transform.Rotate(0, 0, Angle);
 
             // Size Update
-            ropeRenderer.size = new Vector2(Vector2.Distance(lastHitPoint, (Vector2)transform.position), 1);
+            ropeRenderer.size = new Vector2(Vector2.Distance(pos, (Vector2)transform.position), 1);
         }
     }
 
@@ -102,30 +118,31 @@ public class Player : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 rot = (mousePos - (Vector2)transform.position).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rot, Mathf.Infinity, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rot, grappleMaxDistance, layerMask);
 
        
 
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
         ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
-        UpdateRope(hit.point);
 
 
         if (hit)
         {
+            UpdateRope(hit.point);
+
             grappledTime = 0;
             grappled = true;
-            lastPlayerPos = transform.position;
             lastHitPoint = hit.point;
-
-         //   lineRen.SetPosition(0, lastHitPoint);
-           // lineRen.SetPosition(1, transform.position);
-           // lineRen.enabled = true;
-
             SetupHook(hit);
-
-            //transform.position = hit.point;
         }
+        else
+        {
+            lastHitPoint = (Vector2)transform.position + rot * grappleMaxDistance;
+        }
+        grappleHitDistance = Vector2.Distance(transform.position, lastHitPoint);
+        grappleMoveTime = grappleHitDistance / grappleShootSpeed;
+        lastPlayerPos = transform.position;
+        grappleExtending = true;
     }
 
     void SetupHook(RaycastHit2D hit)
@@ -138,16 +155,14 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (grappled)
+        if (grappled || grappleExtending)
         {
-            
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(lastHitPoint, 0.15f);
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(mousePos, 0.15f);
             Gizmos.DrawSphere(lastPlayerPos, 0.15f);
             Gizmos.DrawRay(lastPlayerPos, lastHitPoint - lastPlayerPos);
-            
         }
     }
 
@@ -167,7 +182,6 @@ public class Player : MonoBehaviour
 
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;
-        grappledTime += Time.deltaTime;
     }
 
     public void Hurt(Vector2 hurtPos, float bounceForce = 0)
@@ -193,6 +207,8 @@ public class Player : MonoBehaviour
     {
         Heal();
         grappled = false;
+        grappleExtending = false;
+        grappledTime = 0;
         rb.velocity = Vector2.zero;
         if (currentCheckPoint)
         {
@@ -217,22 +233,40 @@ public class Player : MonoBehaviour
         
         // Grapple Shoot
         if (Input.GetMouseButtonDown(0)) {
-            if (!grappled)
+            if (!grappled && !grappleExtending)
             {
                 Grapple();
             }
         }
         
         // Grapple Management
-        if (Input.GetMouseButton(0) && grappled)
+        if (Input.GetMouseButton(0) && (grappled || grappleExtending))
         {
-            GrappleUpdate();
+            grappledTime += Time.deltaTime;
+            if (grappled && !grappleExtending)
+            {
+                GrappleUpdate();
+            }
+            else if (grappleExtending)
+            {
+                if (grappledTime >= grappleMoveTime)
+                {
+                    grappleExtending = false;
+                }
+                else
+                {
+                    float movePerc = grappledTime / grappleMoveTime;
+                    UpdateRope(Vector2.Lerp(transform.position, lastHitPoint, movePerc));
+                }
+            }
         }
         else
         {
             grappled = false;
+            grappleExtending = false;
             rb.gravityScale = gravityScale;
             lineRen.enabled = false;
+            grappledTime = 0;
             if (hookObj)
             {
                 Destroy(hookObj);

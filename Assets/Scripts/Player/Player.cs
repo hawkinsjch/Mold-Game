@@ -64,6 +64,13 @@ public class Player : MonoBehaviour
     private GameObject _ropeObject;
     private SpriteRenderer ropeRenderer;
 
+    [Header("Sprites List")]
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite deadSprite;
+    [SerializeField] private Sprite happySprite;
+    [SerializeField] private Sprite forceSprite;
+    [SerializeField] private Sprite smileSprite;
+
     private GrappleState currentState = GrappleState.None;
     private enum GrappleState
     {
@@ -87,6 +94,7 @@ public class Player : MonoBehaviour
         }
         Respawn();
         gravityScale = rb.gravityScale;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void UpdateRope(Vector2 pos)
@@ -137,6 +145,7 @@ public class Player : MonoBehaviour
         SetupHook(hit);
 
         currentState = GrappleState.Extending;
+        spriteRenderer.sprite = forceSprite;
         if (hit)
         {
             lastHitPoint = hit.point;
@@ -196,6 +205,7 @@ public class Player : MonoBehaviour
         currentState = GrappleState.None;
         if (health <= 0)
         {
+            spriteRenderer.sprite = deadSprite;
             Respawn();
         }
         else
@@ -215,6 +225,7 @@ public class Player : MonoBehaviour
         currentState = GrappleState.None;
         grappleTime = 0;
         rb.velocity = Vector2.zero;
+        //here.
         if (currentCheckPoint)
         {
             transform.position = (Vector2)currentCheckPoint.transform.position + currentCheckPoint.respawnOffset;
@@ -297,6 +308,7 @@ public class Player : MonoBehaviour
         if (hookObj)
         {
             currentState = GrappleState.Retracting;
+            spriteRenderer.sprite = smileSprite;
         }
         else
         {

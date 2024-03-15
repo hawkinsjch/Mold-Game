@@ -116,6 +116,10 @@ public class Player : MonoBehaviour
             // Size Update
             ropeRenderer.size = new Vector2(Vector2.Distance(pos, (Vector2)transform.position), 1);
         }
+        if (hookObj)
+        {
+            hookObj.transform.position = pos;
+        }
     }
 
     void Grapple()
@@ -129,12 +133,13 @@ public class Player : MonoBehaviour
         _ropeObject = Instantiate(_ropeSprite, transform.position, new Quaternion(0, 0, 0, 0), gameObject.transform);
         ropeRenderer = _ropeObject.GetComponent<SpriteRenderer>();
 
+        SetupHook(hit);
+
 
         currentState = GrappleState.Extending;
         if (hit)
         {
             lastHitPoint = hit.point;
-            SetupHook(hit);
             grappleHitWall = true;
         }
         else
@@ -150,8 +155,11 @@ public class Player : MonoBehaviour
     void SetupHook(RaycastHit2D hit)
     {
         hookObj = Instantiate(hookPrefab);
-        hookObj.transform.position = hit.point;
-        hookObj.transform.parent = hit.collider.transform;
+        if (hit)
+        {
+            hookObj.transform.position = hit.point;
+            hookObj.transform.parent = hit.collider.transform;
+        }
 
     }
 

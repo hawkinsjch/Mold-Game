@@ -23,7 +23,7 @@ public class Projectile : Trap
     {
         base.OnCollisionEnter2D(collision);
 
-        if (!collision.transform.GetComponent<Player>())
+        if (!collision.transform.GetComponent<Player>() && !collision.transform.GetComponent<Projectile>())
         {
             Destroy(gameObject);
         }
@@ -41,6 +41,7 @@ public class Projectile : Trap
     {
         rb = gameObject.AddComponent<Rigidbody2D>();
         rb.gravityScale = 0;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         moveDir = moveDir.normalized;
 

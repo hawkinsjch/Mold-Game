@@ -240,6 +240,11 @@ public class Player : MonoBehaviour
         if (currentCheckPoint)
         {
             transform.position = (Vector2)currentCheckPoint.transform.position + currentCheckPoint.respawnOffset;
+            Animator cpAnim = currentCheckPoint.GetComponent<Animator>();
+            if (cpAnim)
+            {
+                cpAnim.SetTrigger("Respawn");
+            }
         }
         else
         {

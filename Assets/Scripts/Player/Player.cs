@@ -204,6 +204,8 @@ public class Player : MonoBehaviour
         Vector2 grappleDir = (lastHitPoint - (Vector2)transform.position).normalized;
         float grappleVelocity = Mathf.Lerp(grappleInitVelocity, grappleMaxVelocity, Mathf.Clamp((grappleTime - grappleMoveTime) / grappleAccelerationTime, 0, 1));
 
+        hookObj.transform.rotation = Quaternion.FromToRotation(Vector2.up, grappleDir);
+
         rb.velocity = (grappleDir * grappleVelocity);
         rb.gravityScale = 0;
     }

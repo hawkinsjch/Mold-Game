@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Sprite smileSprite;
     private SpriteRenderer spriteRenderer;
 
+
     private GrappleState currentState = GrappleState.None;
     private enum GrappleState
     {
@@ -86,6 +87,12 @@ public class Player : MonoBehaviour
 
     [Header("Checkpoint")]
     public Checkpoint currentCheckPoint;
+
+    [Header("Sound")]
+    [SerializeField]
+    private AudioSource hookHitSfx;
+    [SerializeField]
+    private AudioSource deathSfx;
 
     private void Awake()
     {
@@ -212,6 +219,7 @@ public class Player : MonoBehaviour
 
     public void Hurt(Vector2 hurtPos, float bounceForce = 0)
     {
+        deathSfx.Play();
         health -= 1;
         currentState = GrappleState.None;
         if (health <= 0)
@@ -271,6 +279,7 @@ public class Player : MonoBehaviour
                     if (grappleHitWall)
                     {
                         currentState = GrappleState.Grappled;
+                        hookHitSfx.Play();
                     }
                     else
                     {

@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _ropeSprite;
     private GameObject _ropeObject;
     private SpriteRenderer ropeRenderer;
+    private GameObject ropeConnectPosObj;
 
     [Header("Sprites List")]
 
@@ -132,6 +133,10 @@ public class Player : MonoBehaviour
         {
             Destroy(_ropeObject);
         }
+        if (ropeConnectPosObj)
+        {
+            Destroy(ropeConnectPosObj);
+        }
     }
 
     private void Grapple()
@@ -165,10 +170,13 @@ public class Player : MonoBehaviour
     private void SetupHook(RaycastHit2D hit)
     {
         hookObj = Instantiate(hookPrefab);
+        ropeConnectPosObj = new GameObject("Connection");
         if (hit)
         {
             hookObj.transform.position = hit.point;
             hookObj.transform.parent = hit.collider.transform;
+            ropeConnectPosObj.transform.position = hit.point;
+            ropeConnectPosObj.transform.parent = hit.collider.transform;
         }
 
     }
@@ -241,7 +249,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (ropeConnectPosObj && grappleHitWall)
+        {
+            lastHitPoint = ropeConnectPosObj.transform.position;
+        }
+
         // Grapple Management
         switch (currentState)
         {

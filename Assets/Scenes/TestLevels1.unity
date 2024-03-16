@@ -6208,6 +6208,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3429707697709744292, guid: a6eff5085a97dd748bafacac2d92d841, type: 3}
   m_PrefabInstance: {fileID: 2121857760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &659817229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 139764955290093382, guid: a6eff5085a97dd748bafacac2d92d841, type: 3}
+  m_PrefabInstance: {fileID: 2121857760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c25604f1d40944ea8b55a2be048817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &666581839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10014,7 +10025,7 @@ PrefabInstance:
     - target: {fileID: 2706036403536031181, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: currentCheckPoint
       value: 
-      objectReference: {fileID: 1369933625}
+      objectReference: {fileID: 659817229}
     - target: {fileID: 2706036403536031181, guid: 6296373a861c0b441aacede98c5149a7, type: 3}
       propertyPath: grappleShootSpeed
       value: 100
@@ -12309,17 +12320,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1771997577059298598, guid: ad746aa2202856247913d4cd760d905f, type: 3}
   m_PrefabInstance: {fileID: 1868925924}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1369933625 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 139764955290093382, guid: a6eff5085a97dd748bafacac2d92d841, type: 3}
-  m_PrefabInstance: {fileID: 98077440}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c25604f1d40944ea8b55a2be048817, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1371444415
 PrefabInstance:
   m_ObjectHideFlags: 0

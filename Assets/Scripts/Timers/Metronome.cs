@@ -30,7 +30,14 @@ public class Metronome : MonoBehaviour
         if (audioSource)
         {
             float audioTime = Mathf.Max(audioSource.time - songOffset, 0);
-            deltaBeats = (audioTime - previousAudioTime) * (bpm / 60);
+            if (audioTime >= previousAudioTime)
+            {
+                deltaBeats = (audioTime - previousAudioTime) * (bpm / 60);
+            }
+            else
+            {
+                deltaBeats = (audioTime - (previousAudioTime - audioSource.clip.length)) * (bpm / 60);
+            }
             previousAudioTime = audioTime;
         }
         else

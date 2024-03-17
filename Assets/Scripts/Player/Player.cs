@@ -94,6 +94,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioSource deathSfx;
 
+    [Header("Death Smudges")]
+    [SerializeField]
+    private GameObject[] deathSmudges;
+    [SerializeField]
+    private Vector2 smudgeSizeRange;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -217,6 +223,17 @@ public class Player : MonoBehaviour
         rb.gravityScale = 0;
     }
 
+    private void CreateSmudge()
+    {
+        int deathSmudgeNum = Random.Range(0, deathSmudges.Length);
+
+        GameObject newSmudge = Instantiate(deathSmudges[deathSmudgeNum]);
+        newSmudge.transform.position = transform.position;
+
+        float smudgeSize = Random.Range(smudgeSizeRange.x, smudgeSizeRange.y);
+        newSmudge.transform.localScale = new Vector2(smudgeSize, smudgeSize);
+    }
+
     public void Hurt(Vector2 hurtPos, float bounceForce = 0)
     {
         deathSfx.Play();
@@ -224,6 +241,9 @@ public class Player : MonoBehaviour
         currentState = GrappleState.None;
         if (health <= 0)
         {
+            CreateSmudge();
+
+
             spriteRenderer.sprite = deadSprite;
             Respawn();
         }

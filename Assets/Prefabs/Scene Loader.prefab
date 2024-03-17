@@ -144,3 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneToLoad: TrackTest
+  fadeAnimator: {fileID: 0}
+  loadDelay: 1.2

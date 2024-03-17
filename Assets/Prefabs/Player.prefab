@@ -70,8 +70,7 @@ MonoBehaviour:
   hookHitSfx: {fileID: 7299052028645025175}
   deathSfx: {fileID: 491766025658690739}
   deathSmudges:
-  - {fileID: 3202990631935158224, guid: 753b5eb78c4f3a242ad2959cd5857270, type: 3}
-  - {fileID: 5203645505711310434, guid: c6f43efbba10aa541a80a79fdaab22f7, type: 3}
+  - {fileID: 429390245741224130, guid: 50b51621c6e26e747bf6bcfbc3ce6e47, type: 3}
   smudgeSizeRange: {x: 1.7, y: 2.3}
 --- !u!212 &2853143374056476856
 SpriteRenderer:

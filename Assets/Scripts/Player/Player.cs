@@ -230,7 +230,7 @@ public class Player : MonoBehaviour
         newSmudge.transform.position = transform.position;
 
         float smudgeSize = Random.Range(smudgeSizeRange.x, smudgeSizeRange.y);
-        newSmudge.transform.localScale = new Vector2(smudgeSize, smudgeSize);
+        newSmudge.transform.localScale = new Vector3(smudgeSize, smudgeSize, 1);
     }
 
     public void Hurt(Vector2 hurtPos, float bounceForce = 0)

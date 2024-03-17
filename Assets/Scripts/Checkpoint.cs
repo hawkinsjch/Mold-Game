@@ -23,6 +23,10 @@ public class Checkpoint : MonoBehaviour
         if (player)
         {
             player.Heal();
+            if (player.currentCheckPoint != this)
+            {
+                GetComponent<Animator>().SetTrigger("Respawn");
+            }
             player.currentCheckPoint = this;
         }
     }

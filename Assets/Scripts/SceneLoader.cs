@@ -10,6 +10,8 @@ public class SceneLoader : MonoBehaviour
     [Header("PauseScreen")]
     [SerializeField] private GameObject PauseScreen;
 
+    [SerializeField] private AudioSource music;
+
     private bool waiting;
     private float waitTime;
 
@@ -65,12 +67,14 @@ public class SceneLoader : MonoBehaviour
             {
                 //Stops time
                 Time.timeScale = 0;
+                music.Pause();
                 PauseScreen.SetActive(true);
                 _isPaused = false;
             }
             else
             {
                 Time.timeScale = 1;
+                music.UnPause();
                 PauseScreen.SetActive(false);
                 _isPaused = true;
 

@@ -187,7 +187,6 @@ public class Player : MonoBehaviour
         if (hit)
         {
             hookObj.transform.position = hit.point;
-            hookObj.transform.parent = hit.collider.transform;
             ropeConnectPosObj.transform.position = hit.point;
             ropeConnectPosObj.transform.parent = hit.collider.transform;
         }

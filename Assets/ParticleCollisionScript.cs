@@ -41,8 +41,11 @@ public class ParticleCollisionScript : MonoBehaviour
             if (soundsPlayed < MaxSounds)
             {
                 soundsPlayed += 1;
-                audioSource.pitch = Random.Range(0.9f, 1.1f);
-                audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Length)], Random.Range(0.1f, 0.35f));
+                if (audioSource)
+                {
+                    audioSource.pitch = Random.Range(0.9f, 1.1f);
+                    audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Length)], Random.Range(0.1f, 0.35f));
+                }
             }
         }
     }

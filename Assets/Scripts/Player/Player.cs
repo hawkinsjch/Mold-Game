@@ -7,6 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
+    public Player instance;
+
     private Rigidbody2D rb;
 
     [Header("Grapple Shot Settings")]
@@ -96,6 +98,7 @@ public class Player : MonoBehaviour
         Respawn();
         gravityScale = rb.gravityScale;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        instance = this;
     }
 
     private void UpdateRope(Vector2 pos)
@@ -151,6 +154,7 @@ public class Player : MonoBehaviour
         {
             lastHitPoint = hit.point;
             grappleHitWall = true;
+            SplatController.instance.MakeSplat(hit);
         }
         else
         {
@@ -252,6 +256,7 @@ public class Player : MonoBehaviour
                     if (grappleHitWall)
                     {
                         currentState = GrappleState.Grappled;
+                        
                     }
                     else
                     {

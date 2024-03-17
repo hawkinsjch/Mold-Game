@@ -27,6 +27,7 @@ public class ParticleCollisionScript : MonoBehaviour
         {
             soundsPlayed = 0;
             TimePassed = 0;
+            Destroy(this.gameObject);
         }
     }
     private void OnParticleCollision(GameObject other)
